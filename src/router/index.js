@@ -1,14 +1,24 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import VueRouter from 'vue-router';
+import VueRouter from 'vue-router'
+import Auth from '@/util/auth'
+import staticRoute from './staticRoute'
 
-Vue.use(Router)
 
-const router = new VueRouter();
+Vue.use(VueRouter)
 
-router.beforeEach((to,from,next) => {
-  
+const router = new VueRouter({
+  mode: 'history',
+  routes: staticRoute
 })
+
+router.beforeEach((to, from, next) => {
+  if (Auth.isLogin()) {
+    console.log(1);
+    next({path: "/login", replace: true})
+  }else{
+    next({path: "/login", replace: true})
+  }
+})
+
 
 export default router
