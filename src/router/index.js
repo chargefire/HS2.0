@@ -1,23 +1,37 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Auth from '@/util/auth'
-import staticRoute from './staticRoute'
 
+const Login = resolve => require(['@/views/Login'],resolve)
+const Layout = resolve => require(['@/views/Layout'],resolve)
+const Home = resolve => require(['@/views/Home'],resolve)
+const Notfound = resolve => require(['@/views/404'],resolve)
 
 Vue.use(VueRouter)
 
+const routes=[
+  {path:'/login',component:Login},
+  
+  {
+    path:'/',
+    meta: { requireAuth: true },
+    component:Layout,
+    children:[
+      {
+        path:"home",
+        component:Home
+      }
+    ]
+  },
+  {
+    path: '*',
+    meta: { requireAuth: false },
+    component: Notfound
+  }
+]
+
 const router = new VueRouter({
   mode: 'history',
-  routes: staticRoute
-})
-
-router.beforeEach((to, from, next) => {
-  if (Auth.isLogin()) {
-    console.log(1);
-    next({path: "/login", replace: true})
-  }else{
-    next({path: "/login", replace: true})
-  }
+  routes
 })
 
 
