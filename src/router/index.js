@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Auth from '@/util/auth'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 const Login = resolve => require(['@/views/Login'],resolve)
 const Layout = resolve => require(['@/views/Layout'],resolve)
@@ -10,28 +13,44 @@ Vue.use(VueRouter)
 
 const routes=[
   {path:'/login',component:Login},
-  
+  {path: '/',redirect: '/login'},
   {
-    path:'/',
-    meta: { requireAuth: true },
+    path:'/home',
     component:Layout,
     children:[
       {
-        path:"home",
+        path:"",
         component:Home
       }
     ]
   },
-  {
-    path: '*',
-    meta: { requireAuth: false },
-    component: Notfound
-  }
+  {path: '*',component: Notfound}
 ]
 
 const router = new VueRouter({
   mode: 'history',
   routes
+})
+
+router.beforeEach((to,from,next)=>{
+  NProgress.start();
+  if(Auth.isLogin()){
+    if (to.path === '/login') {
+      next("/home")
+    } else{
+      next()
+    }
+  }else{
+    if (to.path === '/login') {
+      next()
+    } else{
+      next('/login')
+    }
+  }
+});
+
+router.afterEach(() => {
+  NProgress.done(); // 结束Progress
 })
 
 
