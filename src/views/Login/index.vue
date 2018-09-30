@@ -81,20 +81,16 @@
                         this.$axios.post("/api/login.php",this.$qs.stringify(params)).then(res => {
                             Auth.setToken(res.data.token);
                             Auth.setLoginStatus();
-                            this.getMenu();
+                            $store.dispatch("getNewList").then(()=>{
+                                $router.push("home");
+                            })
+                            this.router.push('home');
                         }).catch(function(error){
                             console.log(error);
                         })
                     }else{
                         alert(404)
                     }
-                })
-            },
-            getMenu(){
-                this.$axios.get("/api/menu.php").then(res=>{
-                    let menu=res.data.menu;
-                    localStorage.setItem("menu",JSON.stringify(menu));
-                    this.$router.push({path:"/home"});
                 })
             }
         }

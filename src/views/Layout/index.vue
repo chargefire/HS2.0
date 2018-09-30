@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="main-container">
         <side-bar></side-bar>
         <div class="main-wrap">
             <top-bar></top-bar>
@@ -24,7 +24,7 @@
     }
 </script>
 <style scoped lang="less">
-    .container{
+    .main-container{
         width:100%;
         height:100%;
         .main-wrap{

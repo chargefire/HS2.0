@@ -8,6 +8,7 @@ const Login = resolve => require(['@/views/Login'],resolve)
 const Layout = resolve => require(['@/views/Layout'],resolve)
 const Home = resolve => require(['@/views/Home'],resolve)
 const Notfound = resolve => require(['@/views/404'],resolve)
+const Verson = resolve => require(['@/views/Verson'],resolve)
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,16 @@ const routes=[
       {
         path:"",
         component:Home
+      }
+    ]
+  },
+  {
+    path:"/verson",
+    component:Layout,
+    children:[
+      {
+        path:"",
+        component:Verson
       }
     ]
   },
