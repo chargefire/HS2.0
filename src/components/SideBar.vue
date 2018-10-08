@@ -15,6 +15,10 @@
         <i class="el-icon-document"></i>
         <span slot="title">版本信息</span>
       </el-menu-item>
+      <el-menu-item index="4">
+        <i class="el-icon-document"></i>
+        <span slot="title">前往404页面</span>
+      </el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -76,13 +80,13 @@ export default {
       .switch-menu{
         font-size:24px;
         line-height:60px;
-        color:#fff;
+        color:#20a0ff;
         width:60px;
         display:block;
         text-align:center;
         cursor:pointer;
         :hover{
-          color:#20a0ff;
+          color:#187fcb;
         }
       }
     }

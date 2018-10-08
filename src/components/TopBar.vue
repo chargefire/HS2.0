@@ -13,11 +13,13 @@
 </template>
 
 <script>
+import Auth from '@/util/auth'
 export default {
   name: 'top-bar',
   methods:{
     logout(){
-      alert(1);
+      Auth.removeLoginStatus();
+      this.$router.push('/login');
     }
   }
 }
@@ -42,18 +44,16 @@ export default {
       .right-nav{
         display:flex;
         li{
-          color:#fff;
+          color:#90a4ae;
           font-size:24px;
           line-height:60px;
           width:60px;
           text-align:center;
-          background-color:transparent;
           cursor:pointer;
         }
         :hover{
-          background-color:#fff;
           transition:all 0.3s ease-in-out;
-          color:#27a9f8;
+          color:#20a0ff;
         }
       }
     }

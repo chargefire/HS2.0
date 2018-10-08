@@ -59,7 +59,7 @@ const router = new VueRouter({
 
 router.beforeEach((to,from,next)=>{
   NProgress.start();
-  if(to.path == '/login' && Auth.isLogin){
+  if(to.path == '/login' && Auth.isLogin()){
     next('/home')
   }else{
     next()

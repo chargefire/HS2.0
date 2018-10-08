@@ -81,10 +81,7 @@
                         this.$axios.post("/api/login.php",this.$qs.stringify(params)).then(res => {
                             Auth.setToken(res.data.token);
                             Auth.setLoginStatus();
-                            $store.dispatch("getNewList").then(()=>{
-                                $router.push("home");
-                            })
-                            this.router.push('home');
+                            this.$router.push('home');
                         }).catch(function(error){
                             console.log(error);
                         })
