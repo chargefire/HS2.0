@@ -81,7 +81,8 @@
                         this.$axios.post("/api/login.php",this.$qs.stringify(params)).then(res => {
                             Auth.setToken(res.data.token);
                             Auth.setLoginStatus();
-                            this.$router.push('home');
+                            this.getMenu();
+                            
                         }).catch(function(error){
                             console.log(error);
                         })
@@ -89,6 +90,16 @@
                         alert(404)
                     }
                 })
+            },
+            getMenu(){
+                this.$axios({
+                    url:"/api/menu.php",
+                    method:"GET",
+                }).then(res=>{
+                    window.localStorage.setItem("menu",JSON.stringify(res.data.menu));
+                    this.$router.push('home');
+                })
+                
             }
         }
     }

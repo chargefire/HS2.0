@@ -2,23 +2,28 @@
   <div class="sidebar-wrap">
     <div class="logo-wrap">
       <div class="logo">
-        <img src="">
+        <img src="static/images/logo.png">
       </div>
       <div class="switch-menu"><i class=" al-icon-menu"></i></div>
     </div>
+    
     <el-menu class="menu-wrap" background-color="#fefefe" text-color="#909399" active-text-color="#27a9f8" :default-active="$route.path" :unique-opened="isUnique" :router="isRouter" mode="vertical">
-       <el-menu-item index="/home">
-        <i class="el-icon-menu"></i>
-        <span slot="title">首页</span>
-      </el-menu-item>
-      <el-menu-item index="/verson">
-        <i class="el-icon-document"></i>
-        <span slot="title">版本信息</span>
-      </el-menu-item>
-      <el-menu-item index="4">
-        <i class="el-icon-document"></i>
-        <span slot="title">前往404页面</span>
-      </el-menu-item>
+      <template v-for="item in menu">
+          <el-submenu v-if="item.children.length !== 0" :index="item.router" :key="item.router">
+              <template slot="title">
+                  <i :class="item.icon"></i>
+                  <span slot="title">{{langType === 'en'? item.name_en: item.name}}</span>
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.router" :key="child.router">
+                  <i :class="child.icon"></i>
+                  <span slot="title">{{langType === 'en'? child.name_en: child.name}}</span>
+              </el-menu-item>
+          </el-submenu>
+          <el-menu-item v-else :index="item.router" :key="item.router">
+              <i :class="item.icon"></i>
+              <span slot="title">{{langType === 'en'? item.name_en: item.name}}</span>
+          </el-menu-item>
+      </template>
     </el-menu>
   </div>
 </template>
@@ -29,7 +34,8 @@ export default {
   data(){
     return {
       isUnique:true,
-      isRouter:true
+      isRouter:true,
+      menu: window.localStorage.getItem("menu") ? JSON.parse(window.localStorage.getItem("menu")) : []
     }
   },
   computed:{
@@ -78,9 +84,9 @@ export default {
         }
       }
       .switch-menu{
-        font-size:24px;
+        font-size:18px;
         line-height:60px;
-        color:#20a0ff;
+        color:#90a4ae;
         width:60px;
         display:block;
         text-align:center;
