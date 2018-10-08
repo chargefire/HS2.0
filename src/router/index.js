@@ -13,29 +13,43 @@ const Verson = resolve => require(['@/views/Verson'],resolve)
 Vue.use(VueRouter)
 
 const routes=[
-  {path:'/login',component:Login},
-  {path: '/',redirect: '/login'},
+  //登陆页面
   {
-    path:'/home',
-    component:Layout,
-    children:[
-      {
-        path:"",
-        component:Home
-      }
-    ]
+    path:'/login',
+    name:"login",
+    meta:{
+      requireAuth:false
+    },
+    component:Login
   },
+  //嵌套页面
   {
-    path:"/verson",
+    path:"/",
+    meta:{
+      requireAuth:true
+    },
     component:Layout,
+    redirect:'/home',
     children:[
       {
-        path:"",
+        path:"home",
+        meta:{requireAuth:true},
+        component:Home
+      },
+      {
+        path:"verson",
+        meta:{requireAuth:true},
         component:Verson
       }
     ]
   },
-  {path: '*',component: Notfound}
+  {
+    path:"*",
+    meta:{
+      requireAuth:false
+    },
+    component:Notfound
+  }
 ]
 
 const router = new VueRouter({
@@ -45,18 +59,10 @@ const router = new VueRouter({
 
 router.beforeEach((to,from,next)=>{
   NProgress.start();
-  if(Auth.isLogin()){
-    if (to.path === '/login') {
-      next("/home")
-    } else{
-      next()
-    }
+  if(to.path == '/login' && Auth.isLogin){
+    next('/home')
   }else{
-    if (to.path === '/login') {
-      next()
-    } else{
-      next('/login')
-    }
+    next()
   }
 });
 
