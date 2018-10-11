@@ -44,7 +44,7 @@
     </div>
 </template>
 <script>
-    import Auth from '@/util/auth'
+    import { mapState, mapActions } from 'vuex'
     export default{
         data(){
             return{
@@ -68,6 +68,9 @@
 
         },
         methods:{
+            ...mapActions({
+                loginIn:'auth/loginIn'
+            }),
             forgetPassword(){
                 this.$message.warning("你干嘛不把工资给忘了")
             },
@@ -75,31 +78,22 @@
                 this.$message.warning("激活的话你要等会哦")
             },
             submitForm(){
-                var params={"username":this.loginForm.name,"password":this.loginForm.password}
-                this.$refs["loginForm"].validate(valid =>{
-                    if(valid){
-                        this.$axios.post("/api/login.php",this.$qs.stringify(params)).then(res => {
-                            Auth.setToken(res.data.token);
-                            Auth.setLoginStatus();
-                            this.getMenu();
-                            
-                        }).catch(function(error){
-                            console.log(error);
+                this.$refs.loginForm.validate((valid) =>{
+                    if (valid) {
+                        this.loginIn({
+                            name:this.loginForm.name,
+                            password:this.loginForm.password
+                        }).then(res => {
+                            if(res.login){
+                                this.$router.push('home');
+                            }else{
+                                alert(404)
+                            }
                         })
                     }else{
-                        alert(404)
+                        return false
                     }
                 })
-            },
-            getMenu(){
-                this.$axios({
-                    url:"/api/menu.php",
-                    method:"GET",
-                }).then(res=>{
-                    window.localStorage.setItem("menu",JSON.stringify(res.data.menu));
-                    this.$router.push('home');
-                })
-                
             }
         }
     }

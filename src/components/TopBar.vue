@@ -15,7 +15,7 @@
 <script>
 import Auth from '@/util/auth'
 export default {
-  name: 'top-bar',
+  name: 'topbar',
   methods:{
     logout(){
       Auth.removeLoginStatus();

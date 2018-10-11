@@ -1,5 +1,5 @@
-import auth from './auth'
+import Auth from './auth'
 
 export default{
-    auth:auth
+    auth:Auth
 }

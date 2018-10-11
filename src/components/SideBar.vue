@@ -12,16 +12,16 @@
           <el-submenu v-if="item.children.length !== 0" :index="item.router" :key="item.router">
               <template slot="title">
                   <i :class="item.icon"></i>
-                  <span slot="title">{{langType === 'en'? item.name_en: item.name}}</span>
+                  <span slot="title">{{item.name}}</span>
               </template>
               <el-menu-item v-for="child in item.children" :index="child.router" :key="child.router">
                   <i :class="child.icon"></i>
-                  <span slot="title">{{langType === 'en'? child.name_en: child.name}}</span>
+                  <span slot="title">{{child.name}}</span>
               </el-menu-item>
           </el-submenu>
           <el-menu-item v-else :index="item.router" :key="item.router">
               <i :class="item.icon"></i>
-              <span slot="title">{{langType === 'en'? item.name_en: item.name}}</span>
+              <span slot="title">{{item.name}}</span>
           </el-menu-item>
       </template>
     </el-menu>
@@ -41,11 +41,6 @@ export default {
   computed:{
   },
   methods:{
-  },
-  watch:{
-    '$route' (to,from){
-      console.log(to,from)
-    }
   }
 }
 </script>
